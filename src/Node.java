@@ -8,6 +8,7 @@ public class Node {
 
     public Node(String nodeID) {
         this.nodeID = nodeID;
+        this.edgeTo = new ArrayList<>();
     }
 
     public void addEdge(Node edgeTo) {
