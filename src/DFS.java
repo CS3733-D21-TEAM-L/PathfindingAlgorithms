@@ -7,4 +7,9 @@ public class DFS {
         nodes = Parser.loadNodesandEdges(); //Parses csv and loads the nodes ArrayList
     }
 
+
+    public Node performDFS(){
+
+    }
+
 }
