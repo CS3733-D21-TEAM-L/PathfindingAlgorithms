@@ -3,12 +3,21 @@ import java.util.ArrayList;
 public class Node {
     private ArrayList<Node> edgeTo; //Node that current node is connected to
     private String nodeID; //Node's ID
+    private Node parent; //for backtracking
     private String fullName; //Node's full name
     private String shortName; //Node's short name
 
     public Node(String nodeID) {
         this.nodeID = nodeID;
         this.edgeTo = new ArrayList<>();
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
     }
 
     public void addEdge(Node edgeTo) {
