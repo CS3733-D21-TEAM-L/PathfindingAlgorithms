@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public class Node {
-    private Node edgeTo; //Node that current node is connected to
+    private ArrayList<Node> edgeTo; //Node that current node is connected to
     private String nodeID; //Node's ID
     private String fullName; //Node's full name
     private String shortName; //Node's short name
@@ -9,11 +11,15 @@ public class Node {
     }
 
     public void addEdge(Node edgeTo) {
-        this.edgeTo = edgeTo;
+        this.edgeTo.add(edgeTo);
     }
 
     public String getNodeID() {
         return nodeID;
+    }
+
+    public ArrayList<Node> getEdgeTo() {
+        return edgeTo;
     }
 
     @Override

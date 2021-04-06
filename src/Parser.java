@@ -27,4 +27,43 @@ public class Parser {
         }
         return allElements;
     }
+
+    public static ArrayList<Node> loadNodesandEdges() {
+        List<List<String>> edgesData = Parser.readFile(System.getProperty("user.dir") + "/MapLedges.csv");
+        ArrayList<Node> nodesList = new ArrayList<>();
+        for (List<String> edgesDatum : edgesData) {
+            if ((findNode(nodesList, edgesDatum.get(1)) == -1) || (findNode(nodesList, edgesDatum.get(2)) == -1)) {
+                if ((findNode(nodesList, edgesDatum.get(1)) == -1)) {
+                    nodesList.add(new Node(edgesDatum.get(1)));
+                    if ((findNode(nodesList, edgesDatum.get(2)) == -1)) {
+                        nodesList.add(new Node(edgesDatum.get(2)));
+                        nodesList.get(findNode(nodesList, edgesDatum.get(1))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(2))));
+                    }
+                    nodesList.get(findNode(nodesList, edgesDatum.get(2))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(1))));
+                }
+
+                if ((findNode(nodesList, edgesDatum.get(2)) == -1)) {
+                    nodesList.add(new Node(edgesDatum.get(2)));
+                    if ((findNode(nodesList, edgesDatum.get(1)) == -1)) {
+                        nodesList.add(new Node(edgesDatum.get(1)));
+                        nodesList.get(findNode(nodesList, edgesDatum.get(2))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(1))));
+                    }
+                    nodesList.get(findNode(nodesList, edgesDatum.get(1))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(2))));
+                }
+
+            }
+        }
+
+        System.out.println("done");
+
+        return nodesList;
+    }
+
+    public static int findNode(ArrayList<Node> nodes, String nodeID) {
+        for (int i = 0; i < nodes.size(); i++) {
+            if (nodes.get(i).getNodeID().equals(nodeID))
+                return i;
+        }
+        return -1;
+    }
 }
