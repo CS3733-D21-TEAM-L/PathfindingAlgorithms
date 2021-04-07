@@ -16,13 +16,13 @@ public class Graph {
         boolean keyFlagB = nodesInGraph.containsKey(nodeID_B);
 
         if (keyFlagA){
-            Node newNode = new Node(nodeID_A);
+            Node newNode = new Node(nodeID_A, 'N');
             String newNodeID_A = newNode.getNodeInfo().get(nodeID_A);
             this.nodesInGraph.put(newNodeID_A, newNode);
         }
 
         if (keyFlagB){
-            Node newNode = new Node(nodeID_B);
+            Node newNode = new Node(nodeID_B, 'N');
             String newNodeID_B = newNode.getNodeInfo().get(nodeID_B);
             this.nodesInGraph.put(newNodeID_B, newNode);
         }

@@ -25,12 +25,14 @@ public class Node {
     public int heuristic;
     private final Hashtable<String, Integer> edges;
     public boolean visitedFlag;
+    public char startOrTargetNode;
 
-    public Node(String nodeID) {
+    public Node(String nodeID, char startOrTargetNode) {
         this.nodeID = nodeID;
         this.heuristic = 0;
         this.edges = new Hashtable<String, Integer>();
-        visitedFlag = false;
+        this.visitedFlag = false;
+        this.startOrTargetNode = startOrTargetNode;
     }
 
     //Setters and getters for coordinates
