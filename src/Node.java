@@ -1,20 +1,4 @@
-import java.util.ArrayList;
 import java.util.*;
-
-public class Path {
-    private LinkedList<Node> path;
-    private float costOfPath;
-    private float costOfHeuristic;
-
-    //setter
-    public void add(){
-
-    }
-
-    public void getNode(){
-
-    }
-}
 
 //Class Node: contains all the information that a Node contains
 //FIELDS:
@@ -63,7 +47,7 @@ public class Node {
     }
 
     //Setters and getters for peripheral information for Node
-    public Node setNodeInfo(String NodeID, String floor, String building, String nodeType, String longName, String shortName) {
+    public void setNodeInfo(String NodeID, String floor, String building, String nodeType, String longName, String shortName) {
         this.nodeID = NodeID;
         this.floor = floor;
         this.building = building;
