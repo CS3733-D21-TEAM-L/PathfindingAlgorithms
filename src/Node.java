@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Node {
     /**ArrayList of nodes connected to this node
      */
-    private ArrayList<Node> edgeTo;
+    private ArrayList<Node> edges;
     /**The Node's ID
      */
     private String nodeID; //Node's ID
@@ -21,7 +21,7 @@ public class Node {
     /** The Node's full name
      */
     private String fullName;
-    /** The Node's shortName
+    /** The Node's short name
      */
     private String shortName;
     /** Boolean showing if the node has been visited. Useful for Graph traversal
@@ -42,7 +42,7 @@ public class Node {
      */
     public Node(String nodeID, int x, int y) {
         this.nodeID = nodeID;
-        this.edgeTo = new ArrayList<>(); //Instantiates the ArrayList of nodes this node can reach
+        this.edges = new ArrayList<>(); //Instantiates the ArrayList of nodes this node can reach
         this.x = x;
         this.y = y;
     }
@@ -69,7 +69,7 @@ public class Node {
      * @param edgeTo the target node
      */
     public void addEdge(Node edgeTo) {
-        this.edgeTo.add(edgeTo);
+        this.edges.add(edgeTo);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Node {
      * @return An ArrayList of nodes connected to this node
      */
     public ArrayList<Node> getEdges() {
-        return edgeTo;
+        return edges;
     }
 
 }

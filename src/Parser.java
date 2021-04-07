@@ -49,16 +49,25 @@ public class Parser {
      * @return ArrayList of bidirectional nodes in the CSV file
      */
     public static ArrayList<Node> loadNodesandEdges() {
+        List<List<String>> nodesData = Parser.readFile(System.getProperty("user.dir") + "/MapLnodes.csv");
         List<List<String>> edgesData = Parser.readFile(System.getProperty("user.dir") + "/MapLedges.csv");
         ArrayList<Node> nodesList = new ArrayList<>(); //Instantiate the Arraylist of nodes
 
         //Load all the nodes into nodesList
         for (List<String> edgesDatum : edgesData) {
             if (Parser.indexOfNode(nodesList, edgesDatum.get(1)) == -1){
-                nodesList.add(new Node(edgesDatum.get(1)));
+                for (int i = 0; i < nodesData.size(); i++) {
+                    if (nodesData.get(i).get(0).equals(edgesDatum.get(1))){
+                        nodesList.add(new Node(edgesDatum.get(1), Integer.valueOf(nodesData.get(i).get(1)), Integer.valueOf(nodesData.get(i).get(2))));
+                    }
+                }
             }
             if (Parser.indexOfNode(nodesList, edgesDatum.get(2)) == -1){
-                nodesList.add(new Node(edgesDatum.get(2)));
+                for (int i = 0; i < nodesData.size(); i++) {
+                    if (nodesData.get(i).get(0).equals(edgesDatum.get(2))){
+                    nodesList.add(new Node(edgesDatum.get(2), Integer.valueOf(nodesData.get(i).get(1)), Integer.valueOf(nodesData.get(i).get(2))));}
+
+                }
             }
         }
 
@@ -71,6 +80,7 @@ public class Parser {
                 }
             }
         }
+        System.out.println("done");
 
         return nodesList;
     }
