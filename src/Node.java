@@ -6,17 +6,27 @@ import java.util.ArrayList;
  *
  */
 public class Node {
-    private ArrayList<Node> edgeTo; //Node that the current node is connected to
+    /**ArrayList of nodes connected to this node
+     */
+    private ArrayList<Node> edgeTo;
+    /**The Node's ID
+     */
     private String nodeID; //Node's ID
+    /**The parent node. Useful for backtracking
+     */
     private Node parent; //for backtracking
-    /** True if the node has a parent, and false if it doesn't. Useful for backtracking
+    /** Boolean for if the node has a parent. Useful for backtracking
      */
     public boolean hasParent;
-    private String fullName; //Node's full name
-    private String shortName; //Node's short name
-    /** True if the node has been visited, helpful for graph traversal
+    /** The Node's full name
      */
-    public boolean visited; //Boolean used to check if the node has been visited or not
+    private String fullName;
+    /** The Node's shortName
+     */
+    private String shortName;
+    /** Boolean showing if the node has been visited. Useful for Graph traversal
+     */
+    public boolean visited;
 
     /**
      * Creates a node with the specified nodeID
@@ -27,29 +37,45 @@ public class Node {
         this.edgeTo = new ArrayList<>(); //Instantiates the ArrayList of nodes this node can reach
     }
 
+    /**
+     * Retrieves the Parent for this node
+     * @return Parent node
+     */
     public Node getParent() {
         return parent;
     }
 
+    /**
+     * Changes the parent node for this node and sets hasParent to true
+     * @param parent the parent node
+     */
     public void setParent(Node parent) {
         this.parent = parent;
         this.hasParent = true;
     }
 
+    /**
+     * adds an edge to this node
+     * @param edgeTo the target node
+     */
     public void addEdge(Node edgeTo) {
         this.edgeTo.add(edgeTo);
     }
 
+    /**
+     * gets the nodeID for this node
+     * @return the nodeID
+     */
     public String getNodeID() {
         return nodeID;
     }
 
+    /**
+     * Retrieves all the nodes connected to this node
+     * @return An ArrayList of nodes connected to this node
+     */
     public ArrayList<Node> getEdges() {
         return edgeTo;
     }
 
-    @Override
-    public String toString() {
-        return nodeID;
-    }
 }
