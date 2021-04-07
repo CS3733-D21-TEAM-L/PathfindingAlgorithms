@@ -27,6 +27,14 @@ public class Node {
     /** Boolean showing if the node has been visited. Useful for Graph traversal
      */
     public boolean visited;
+    /**
+     * X coordinate value
+     */
+    private int x;
+    /**
+     * Y coordinate value
+     */
+    private int y;
 
     /**
      * Creates a node with the specified nodeID
