@@ -33,7 +33,7 @@ public class Node {
         return nodeID;
     }
 
-    public ArrayList<Node> getEdges() {
+    public ArrayList<Node> getEdgeTo() {
         return edgeTo;
     }
 
