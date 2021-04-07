@@ -35,6 +35,10 @@ public class Node {
      * Y coordinate value
      */
     private int y;
+    /**
+     * Distance to node
+     */
+    private int heuristic;
 
     /**
      * Creates a node with the specified nodeID
@@ -45,6 +49,21 @@ public class Node {
         this.edges = new ArrayList<>(); //Instantiates the ArrayList of nodes this node can reach
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * Retrieves the heuristic value
+     * @return Distance to node
+     */
+    public int getHeuristic() {
+        return heuristic;
+    }
+
+    /**
+     * Sets the heuristic value
+     */
+    public void setHeuristic(int heuristic) {
+        this.heuristic = heuristic;
     }
 
     /**
