@@ -6,7 +6,7 @@ public class Node {
     private Node parent; //for backtracking
     private String fullName; //Node's full name
     private String shortName; //Node's short name
-    private boolean visited; //Boolean used to check if the node has been visited or not
+    public boolean visited; //Boolean used to check if the node has been visited or not
 
     public Node(String nodeID) {
         this.nodeID = nodeID;
