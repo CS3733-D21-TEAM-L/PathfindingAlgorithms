@@ -6,13 +6,13 @@ public class AStar {
     public static final int DIAGONAL_COST = 14;
     public static final int V_H_COST = 10;
     //Cells of out grid
-    private Cell[][] grid;
+    private final Cell[][] grid;
     //We define a priority queue for open cells
     //Open Cells: the set of nodes to be evaluated
     //we put cells with lowest cost in first
-    private PriorityQueue<Cell> openCells;
+    private final PriorityQueue<Cell> openCells;
     //Closed Cells : the set of nodes already evaluated
-    private boolean[][] closedCells;
+    private final boolean[][] closedCells;
     //start cell
     private int startI, startJ;
     //End cell

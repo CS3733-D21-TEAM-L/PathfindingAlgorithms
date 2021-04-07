@@ -11,7 +11,7 @@ import java.util.*;
 //    longName (type: string): the long name associated with the node e.g. "Anesthesia"
 //    shortName (type: string): the shorter name associated with the node e.g. "ConfC001L1"
 //    heuristic (type: int): The (under)estimated distance from this state to the goal state of the graph.
-//    edges (type: dictionary): A dictionary relating the names of the adjacent nodes to the respective path cost from itself to this node.
+//    edges (type: linkedlist of nodes): A linkedlist of nodes that connect to the current node.
 //    visitedFlag (type: boolean): flag that determines if you have visited this node before
 public class Node {
     private int xCoord;
@@ -23,13 +23,14 @@ public class Node {
     private String longName;
     private String shortName;
     public int heuristic;
-    public Hashtable<String, Integer> edges;
+    private final Hashtable<String, Integer> edges;
     public boolean visitedFlag;
 
-    public Node(int heuristic, Hashtable<String, Integer> edges, boolean visitedFlag) {
-        this.heuristic = heuristic;
-        this.edges = edges;
-        this.visitedFlag = visitedFlag;
+    public Node(String nodeID) {
+        this.nodeID = nodeID;
+        this.heuristic = 0;
+        this.edges = new Hashtable<String, Integer>();
+        visitedFlag = false;
     }
 
     //Setters and getters for coordinates
@@ -46,9 +47,12 @@ public class Node {
         return xyCoord;
     }
 
+    public void setNodeID(String nodeID){
+        this.nodeID = nodeID;
+    }
+
     //Setters and getters for peripheral information for Node
-    public void setNodeInfo(String NodeID, String floor, String building, String nodeType, String longName, String shortName) {
-        this.nodeID = NodeID;
+    public void setNodeInfo(String floor, String building, String nodeType, String longName, String shortName) {
         this.floor = floor;
         this.building = building;
         this.nodeType = nodeType;
@@ -58,7 +62,7 @@ public class Node {
 
     public Hashtable<String, String> getNodeInfo() {
         Hashtable<String, String> nodeInfo = new Hashtable<String, String>();
-        nodeInfo.put("NodeID", this.nodeID);
+        nodeInfo.put("nodeID", this.nodeID);
         nodeInfo.put("floor", this.floor);
         nodeInfo.put("building", this.building);
         nodeInfo.put("nodeType", this.nodeType);
@@ -67,4 +71,25 @@ public class Node {
 
         return nodeInfo;
     }
+
+    //setter for setVisitedFlag
+    public void setVisitedFlag(boolean visitedFlag){
+        this.visitedFlag = visitedFlag;
+    }
+
+    //setter and getter for edges
+    public Hashtable<String, Integer> addEdges(Node aNode, int cost){
+        String aNodeID = aNode.nodeID;
+        String currentNodeID = this.nodeID;
+        this.edges.put(aNodeID, cost);
+        aNode.edges.put(currentNodeID, cost);
+
+        return this.edges;
+    }
+
+    //setter and getter for heuristic
+    public void setHeuristic(int heuristic){
+        this.heuristic = heuristic;
+    }
+
 }
