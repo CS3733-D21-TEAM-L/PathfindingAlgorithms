@@ -32,25 +32,19 @@ public class Parser {
         List<List<String>> edgesData = Parser.readFile(System.getProperty("user.dir") + "/MapLedges.csv");
         ArrayList<Node> nodesList = new ArrayList<>();
         for (List<String> edgesDatum : edgesData) {
-            if ((findNode(nodesList, edgesDatum.get(1)) == -1) || (findNode(nodesList, edgesDatum.get(2)) == -1)) {
-                if ((findNode(nodesList, edgesDatum.get(1)) == -1)) {
-                    nodesList.add(new Node(edgesDatum.get(1)));
-                    if ((findNode(nodesList, edgesDatum.get(2)) == -1)) {
-                        nodesList.add(new Node(edgesDatum.get(2)));
-                        nodesList.get(findNode(nodesList, edgesDatum.get(1))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(2))));
-                    }
-                    nodesList.get(findNode(nodesList, edgesDatum.get(2))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(1))));
+            if (Parser.findNode(nodesList, edgesDatum.get(1)) == -1){
+                nodesList.add(new Node(edgesDatum.get(1)));
+            }
+            if (Parser.findNode(nodesList, edgesDatum.get(2)) == -1){
+                nodesList.add(new Node(edgesDatum.get(2)));
+            }
+        }
+        for (Node node : nodesList) {
+            for (List<String> edgesDatum : edgesData) {
+                if (node.getNodeID().equals(edgesDatum.get(1))){
+                    node.addEdge(nodesList.get(Parser.findNode(nodesList, edgesDatum.get(2))));
+                    nodesList.get(Parser.findNode(nodesList, edgesDatum.get(2))).addEdge(node);
                 }
-
-                if ((findNode(nodesList, edgesDatum.get(2)) == -1)) {
-                    nodesList.add(new Node(edgesDatum.get(2)));
-                    if ((findNode(nodesList, edgesDatum.get(1)) == -1)) {
-                        nodesList.add(new Node(edgesDatum.get(1)));
-                        nodesList.get(findNode(nodesList, edgesDatum.get(2))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(1))));
-                    }
-                    nodesList.get(findNode(nodesList, edgesDatum.get(1))).addEdge(nodesList.get(findNode(nodesList, edgesDatum.get(2))));
-                }
-
             }
         }
 

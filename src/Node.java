@@ -4,6 +4,7 @@ public class Node {
     private ArrayList<Node> edgeTo; //Node that current node is connected to
     private String nodeID; //Node's ID
     private Node parent; //for backtracking
+    public boolean hasParent;
     private String fullName; //Node's full name
     private String shortName; //Node's short name
     public boolean visited; //Boolean used to check if the node has been visited or not
@@ -12,6 +13,7 @@ public class Node {
         this.nodeID = nodeID;
         this.edgeTo = new ArrayList<>();
         this.visited = false;
+        this.hasParent=false;
     }
 
     public Node getParent() {
@@ -20,6 +22,7 @@ public class Node {
 
     public void setParent(Node parent) {
         this.parent = parent;
+        this.hasParent = true;
     }
 
     public void addEdge(Node edgeTo) {
@@ -30,7 +33,7 @@ public class Node {
         return nodeID;
     }
 
-    public ArrayList<Node> getEdgeTo() {
+    public ArrayList<Node> getEdges() {
         return edgeTo;
     }
 
