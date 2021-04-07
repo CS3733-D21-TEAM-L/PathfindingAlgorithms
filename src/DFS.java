@@ -1,8 +1,4 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class DFS {
@@ -44,11 +40,11 @@ public class DFS {
         //System.out.println(temp);
        // System.out.println("visited " + visited);
         //System.out.println("answer " + answer);
-        if(temp.getEdgeTo().size()>0) {
-            for (int i = 0; i < temp.getEdgeTo().size(); i++) {  //goes through each edge
+        if(temp.getEdges().size()>0) {
+            for (int i = 0; i < temp.getEdges().size(); i++) {  //goes through each edge
                 //System.out.println("Going into edge " + temp.getEdgeTo().get(i).getNodeID() + " of node " + temp.getNodeID());
-                if (temp.getEdgeTo().get(i).getNodeID().equals(end.getNodeID())) { //checks if edge = to answer, if so adds it to answer and returns
-                    answer.add(temp.getEdgeTo().get(i));
+                if (temp.getEdges().get(i).getNodeID().equals(end.getNodeID())) { //checks if edge = to answer, if so adds it to answer and returns
+                    answer.add(temp.getEdges().get(i));
                     //System.out.println("We Here");
                     //System.out.println("answer" + answer);
                     return answer;
@@ -57,7 +53,7 @@ public class DFS {
                     int check = 1;
                     for (int j = 0; j < visited.size(); j++) { //goes through all of the visited list and check if equal to current edge
                         //System.out.println(visited.get(j).getNodeID() + " " + temp.getEdgeTo().get(i).getNodeID());
-                        if (visited.get(j).getNodeID().equals(temp.getEdgeTo().get(i).getNodeID())) {
+                        if (visited.get(j).getNodeID().equals(temp.getEdges().get(i).getNodeID())) {
                             check = 0; //if it is in it, sets check to 0
                         } else {
                             //System.out.println("Were are in node " + temp.getNodeID()+ " and edge node "+ temp.getEdgeTo().get(i).getNodeID()+ " is not visited");
@@ -72,7 +68,7 @@ public class DFS {
                     if (check == 1) { //if it was not in visited, adds to visited and answer and sets temp to this edge then goes recursive
                         notAllVisited = 1; //if it is not, not all nodes are visited
                         Node temp2 = temp;
-                        temp = temp.getEdgeTo().get(i);
+                        temp = temp.getEdges().get(i);
                         temp.setParent(temp2); //sets parent in order to backtrack
                         visited.add(temp);
                         answer.add(temp);
