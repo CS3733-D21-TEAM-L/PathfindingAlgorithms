@@ -1,4 +1,7 @@
-//Define a cell of the grid
+/**
+ * <h1>Cell</h1>
+ * Defines a cell for each grid
+ */
 public class Cell {
 
     //coordinates

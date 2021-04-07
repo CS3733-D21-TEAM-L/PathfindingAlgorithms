@@ -1,11 +1,19 @@
 import java.util.PriorityQueue;
 
+/**
+ * <h1>A* Pathfinding</h1>
+ * This program performs A* Pathfinding
+ * @author
+ */
 public class AStar {
 
-    //costs for diagonal and vertical / horizontal moves
+    /**Instantiates cost for diagonal moves
+     */
     public static final int DIAGONAL_COST = 14;
+    /**Instantiates cost for vertical and horizontal moves
+     */
     public static final int V_H_COST = 10;
-    //Cells of out grid
+    //Cells of our grid
     private Cell[][] grid;
     //We define a priority queue for open cells
     //Open Cells: the set of nodes to be evaluated
@@ -18,6 +26,16 @@ public class AStar {
     //End cell
     private int endI, endJ;
 
+    /**
+     * Sets up the grid for the pathfinding algorithm as well as the start and ending coordinates
+     * @param width the width of the grid
+     * @param height the height of the grid
+     * @param si the row of the start cell
+     * @param sj the column of the start cell
+     * @param ei the row of the end cell
+     * @param ej the column of the end cell
+     * @param blocks the coordinates of the path blocks
+     */
     public AStar(int width, int height, int si, int sj, int ei, int ej, int[][] blocks) {
         grid = new Cell[width][height];
         closedCells = new boolean[width][height];
@@ -59,6 +77,12 @@ public class AStar {
         grid[i][j] = null;
     }
 
+    /**
+     * Updates the cost of each route as needed
+     * @param current the current cell we're on
+     * @param t the cell we're moving to
+     * @param cost the cost of making this move
+     */
     public void updateCostIfNeeded(Cell current, Cell t, int cost) {
         if (t == null || closedCells[t.i][t.j])
             return;
@@ -75,6 +99,8 @@ public class AStar {
         }
     }
 
+    /**Processes the cost of the board
+     */
     public void process() {
         //we add the start location to open list
         openCells.add(grid[startI][startJ]);
@@ -136,6 +162,9 @@ public class AStar {
         }
     }
 
+    /**
+     * Displays the board
+     */
     public void display() {
         System.out.println("Grid: ");
 
@@ -157,6 +186,9 @@ public class AStar {
         System.out.println();
     }
 
+    /**
+     * Displays the cost of each reachable location on the board along the path to the end
+     */
     public void displayScores() {
         System.out.println("\nScores for cells: ");
 
@@ -173,6 +205,9 @@ public class AStar {
         System.out.println();
     }
 
+    /**
+     * Displays the chosen path
+     */
     public void displaySolution(){
         if (closedCells[endI][endJ]) {
             //We track back the path

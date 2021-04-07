@@ -1,16 +1,27 @@
 import java.util.ArrayList;
 
-
+/**
+ * <h1>DFS</h1>
+ * This program performs Depth-First Search
+ * @author Conor McDonough
+ */
 public class DFS {
     public static void main(String[] args) {
         ArrayList<Node> nodes= new ArrayList<>(); //ArrayList of Nodes
+        Stopwatch loadnodes = new Stopwatch();
         nodes = Parser.loadNodesandEdges(); //Parses csv and loads the nodes ArrayList
+        System.out.println(loadnodes.elapsedTime());
         //System.out.println(nodes.get(0).getEdgeTo());
         //System.out.println(nodes.get(28));
         //System.out.println(nodes.get(30));
-        ArrayList<Node> answer = DoDFS(nodes.get(28), nodes.get(30));
+        Stopwatch DFSwatch = new Stopwatch();
 
-
+        //To run this code simply insert the nodeID for the start and end nodes
+        // as the second parameter for both instances of indexOfNode
+        // The first instance would be the starting node and the second is the end node
+        ArrayList<Node> answer = DoDFS(nodes.get(Parser.indexOfNode(nodes, "")),
+                nodes.get(Parser.indexOfNode(nodes, "")));
+        System.out.println(DFSwatch.elapsedTime());
 
     }
 

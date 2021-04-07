@@ -6,15 +6,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Parser for CSV files to load the nodes and edges from the provided csv files
- * @Author Emmanuel Ola
+ * <h1>Parser</h1>
+ * This program parses csv files into nodes ArrayLists containing info about each node.
+ * It also loads the edges connected to each node
+ * @author Emmanuel Ola
  */
 public class Parser {
     /**
      * Method to read in csv files and convert them to a list of row elements
      * containing info for each file
      * @param path Path to the csv file
-     * @Author Freud Oulon
+     * @author Freud Oulon
      * @return
      */
     public static List<List<String>> readFile(String path) {
@@ -43,7 +45,7 @@ public class Parser {
      * Static method that reads the data passed from Parser.readFile() and converts
      * them into an ArrayList of nodes that information about each node.
      * It also loads the edges of each node while it parses the data
-     * @Author
+     * @author emmanuelola
      * @return ArrayList of bidirectional nodes in the CSV file
      */
     public static ArrayList<Node> loadNodesandEdges() {
@@ -76,7 +78,7 @@ public class Parser {
     /**
      * Retrieves the index of a node within an ArrayList of nodes, when provided the nodeID for the node.
      * @param nodes ArrayList of nodes
-     * @param nodeID nodeID for the missing node
+     * @author Emmanuel Ola
      * @return index of provided node, or -1 if the node isn't in the list
      */
     public static int indexOfNode(ArrayList<Node> nodes, String nodeID) {
