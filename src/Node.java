@@ -40,9 +40,11 @@ public class Node {
      * Creates a node with the specified nodeID
      * @param nodeID nodeID for this node
      */
-    public Node(String nodeID) {
+    public Node(String nodeID, int x, int y) {
         this.nodeID = nodeID;
         this.edgeTo = new ArrayList<>(); //Instantiates the ArrayList of nodes this node can reach
+        this.x = x;
+        this.y = y;
     }
 
     /**
