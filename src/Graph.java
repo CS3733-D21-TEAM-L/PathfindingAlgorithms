@@ -1,14 +1,15 @@
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class Graph {
     private Hashtable<String, Node> nodesInGraph;
-    private LinkedList<Node> path;
-    private float costOfPath;
+    public ArrayList<Node> path;
+    public float costOfPath;
 
-    public Graph(){
-        LinkedList<Node> path = new LinkedList<Node>();
+    public Graph(ArrayList<Node> path){
         this.costOfPath = 0;
+        this.path = path;
     }
 
     public void addStatesAndEdges(String nodeID_A, String nodeID_B, int cost){

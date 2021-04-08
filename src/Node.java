@@ -89,6 +89,10 @@ public class Node {
         return this.edges;
     }
 
+    public Hashtable<String, Integer> getEdges(){
+        return this.edges;
+    }
+
     //setter and getter for heuristic
     public void setHeuristic(int heuristic){
         this.heuristic = heuristic;
