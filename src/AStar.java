@@ -32,7 +32,7 @@ public class AStar {
 
             // If we reach our goal location in the queue break out of the loop
             if (current.getNodeID().equals(goal.getNodeID())) {
-                break;
+                break; //exit if goal is found
             }
 
             // Iterate through all nodes connected to current node
@@ -45,7 +45,7 @@ public class AStar {
                 if (costSoFar.contains(next) || cost < costSoFar.get(next)) { //next+1??
 
                     // Adds the next location and the new cost to the cost_so_far dictionary
-                    //cost_so_far[next location in iteration] = new_cost;
+                    // cost_so_far[next location in iteration] = new_cost;
                     costSoFar.put(next, cost);
 
                     // Calculate the priority or f(n) based off the new calculated cost and the Euclidean distance
