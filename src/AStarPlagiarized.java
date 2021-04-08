@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
  * <h1>A* Pathfinding</h1>
  * This program performs A* Pathfinding
  */
-public class AStarPlagiarized {
+public class AStarExample {
 
     /**Instantiates cost for diagonal moves
      */
@@ -35,7 +35,7 @@ public class AStarPlagiarized {
      * @param ej the column of the end cell
      * @param blocks the coordinates of the path blocks
      */
-    public AStarPlagiarized(int width, int height, int si, int sj, int ei, int ej, int[][] blocks) {
+    public AStarExample(int width, int height, int si, int sj, int ei, int ej, int[][] blocks) {
         grid = new Cell[width][height];
         closedCells = new boolean[width][height];
         openCells = new PriorityQueue<Cell>((Cell c1, Cell c2) -> {
@@ -244,7 +244,7 @@ public class AStarPlagiarized {
     }
 
     public static void main(String[] args) {
-        AStarPlagiarized aStar = new AStarPlagiarized(5, 5, 0, 0, 3, 0,
+        AStarExample aStar = new AStarExample(5, 5, 0, 0, 3, 0,
                 new int[][]{
                         {0,4}, {2,2}, {2,0}, {3,1}, {3,3}, {2,1}, {2,3}
                 }
