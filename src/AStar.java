@@ -32,7 +32,7 @@ public class AStar {
 
             // If we reach our goal location in the queue break out of the loop
             if (current.getNodeID().equals(goal.getNodeID())) {
-                break; //exit if goal is found
+                break; // Exit if goal is found
             }
 
             // Iterate through all nodes connected to current node

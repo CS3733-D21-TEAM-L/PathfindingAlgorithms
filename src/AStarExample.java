@@ -1,5 +1,7 @@
 import java.util.PriorityQueue;
 
+// Astar example: John Canessa- https://www.johncanessa.com/2020/01/29/a-search-algorithm/
+
 /**
  * <h1>A* Pathfinding</h1>
  * This program performs A* Pathfinding
