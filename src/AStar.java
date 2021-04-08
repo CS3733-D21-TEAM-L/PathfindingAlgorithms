@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 public class AStar {
 
     public static void createPath(Node start, Node goal) { //(mapData, Node start, Node goal)
-        //Initialize variable to track cost
+        // Initialize variable to track cost
         int cost = 0;
 
         // Set up instance of the priority queue (maybe a class we have to make)
@@ -24,18 +24,18 @@ public class AStar {
         Hashtable<Node, Integer> costSoFar = new Hashtable<Node, Integer>();
         Hashtable<Node, Node> cameFrom = new Hashtable<Node, Node>();
 
-        // iterate through the queue
+        // Iterate through the queue
         while (!frontier.isEmpty()) //frontier is not empty
         {
-            // set up current location
+            // Set up current location
             Node current = frontier.poll(); //current item in queue;
 
-            // if we reach our goal location in the queue break out of the loop
+            // If we reach our goal location in the queue break out of the loop
             if (current.getNodeID().equals(goal.getNodeID())) {
                 break;
             }
 
-            // iterate through all nodes connected to current node
+            // Iterate through all nodes connected to current node
             for (Node next : current.getEdges()) {
                 // Calculates the cost of the next point (this represents g(n))
                 cost = costSoFar.get(current) + current.getHeuristic(); //costSoFar[current location in iteration] + current point distance;
