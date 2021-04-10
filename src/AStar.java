@@ -22,7 +22,7 @@ public class AStar {
 
         // Initialize dictionaries to track past nodes and costs
         Hashtable<Node, Integer> costSoFar = new Hashtable<Node, Integer>();
-        Hashtable<Node, Node> cameFrom = new Hashtable<Node, Node>
+        Hashtable<Node, Node> cameFrom = new Hashtable<Node, Node>();
         // Iterate through the queue
         while (!frontier.isEmpty()) //frontier is not empty
         {
