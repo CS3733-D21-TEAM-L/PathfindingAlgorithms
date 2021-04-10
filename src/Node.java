@@ -68,11 +68,16 @@ public class Node {
      * @param y      y value of the node's location
      * @param edges  Hashtable representing node and its associated cost
      */
-    public Node(String nodeID, int x, int y) {
-        this.nodeID = nodeID;
-        this.edges = new ArrayList<>(); //Instantiates the ArrayList of nodes this node can reach
+    public Node(String nodeID, int x, int y, Hashtable<String, Integer> edges) {
+        //coordinates
         this.x = x;
         this.y = y;
+
+        //edges
+        this.edges = edges;
+
+        //nodeID
+        this.nodeID = nodeID;
     }
 
 
@@ -190,8 +195,22 @@ public class Node {
      * adds an edge to this node
      * @param edgeTo the target node
      */
-    public void addEdge(Node edgeTo) {
-        this.edges.add(edgeTo);
+    public Hashtable<String, Integer> addEdges(Node aNode, int cost) {
+        String aNodeID = aNode.nodeID;
+        String currentNodeID = this.nodeID;
+        this.edges.put(aNodeID, cost);
+        aNode.edges.put(currentNodeID, cost);
+
+        return this.edges;
+    }
+
+    /**
+     * Retrieves all the nodes connected to this node
+     *
+     * @return An ArrayList of nodes connected to this node
+     */
+    public Hashtable<String, Integer> getEdges() {
+        return this.edges;
     }
 
     /**
