@@ -46,7 +46,7 @@ public class Node {
     /**
      * Boolean showing if the node has been visited. Useful for Graph traversal
      */
-    public boolean visited;
+    public boolean visitedFlag;
     /**
      * X coordinate value
      */
@@ -173,6 +173,13 @@ public class Node {
     }
 
     /**
+     * Sets the visited flag
+     */
+    public void setVisitedFlag(boolean visitedFlag) {
+        this.visitedFlag = visitedFlag;
+    }
+
+    /**
      * Retrieves the Parent for this node
      *
      * @return Parent node
@@ -192,8 +199,9 @@ public class Node {
     }
 
     /**
-     * adds an edge to this node
-     * @param edgeTo the target node
+     * Adds an edge to the current node
+     * @param aNode Node used to add an edge from current Node
+     * @param cost Integer representing the cost of the edge
      */
     public Hashtable<String, Integer> addEdges(Node aNode, int cost) {
         String aNodeID = aNode.nodeID;
