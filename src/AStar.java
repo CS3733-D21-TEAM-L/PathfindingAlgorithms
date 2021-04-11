@@ -4,7 +4,7 @@
 // f(n) is the estimated cost of the path passing through n
 // g(n) is the KNOWN distance
 // h(n) is estimated by the heuristic
-
+/*
 import java.util.Hashtable;
 import java.util.PriorityQueue;
 
@@ -61,3 +61,5 @@ public class AStar {
         }
     }
 }
+
+ */

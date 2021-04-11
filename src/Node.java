@@ -1,16 +1,15 @@
-import java.util.*;
 import java.util.Hashtable;
 
 /**
  * <h1>Node</h1>
  * This class contains information about each node
- *
+ * @author Emmanuel Ola, Bryan Gass, Frank McShan
  */
 public class Node {
     /**
      * Hashtable of nodes connected to this node
      */
-    private Hashtable<String, Integer> edges;
+    private Hashtable<Node, Integer> edges;
     /**
      * The Node's ID
      */
@@ -19,10 +18,6 @@ public class Node {
      * The parent node. Useful for backtracking
      */
     private Node parent; //for backtracking
-    /**
-     * Boolean for if the node has a parent. Useful for backtracking
-     */
-    public boolean hasParent;
     /**
      * The Node's full name
      */
@@ -58,7 +53,15 @@ public class Node {
     /**
      * Distance to node
      */
-    private int heuristic;
+    private double heuristic;
+    /**
+     * The cost of the cheapest path to this node currently known. The default value is positive infinity
+     */
+    private double costSoFar;
+    /**
+     * The sum of the costSoFar and the heuristic. The default value is positive infinity
+     */
+    private double AStarScore;
 
     /**
      * Minimal constructor that loads the x, and y coordinates, as well as the edges connected to the constructor
@@ -68,7 +71,7 @@ public class Node {
      * @param y      y value of the node's location
      * @param edges  Hashtable representing node and its associated cost
      */
-    public Node(String nodeID, int x, int y, Hashtable<String, Integer> edges) {
+    public Node(String nodeID, int x, int y, Hashtable<Node, Integer> edges) {
         //coordinates
         this.x = x;
         this.y = y;
@@ -78,6 +81,8 @@ public class Node {
 
         //nodeID
         this.nodeID = nodeID;
+        this.costSoFar = Double.POSITIVE_INFINITY;
+        this.AStarScore = Double.POSITIVE_INFINITY;
     }
 
 
@@ -90,12 +95,14 @@ public class Node {
         this.nodeID = nodeID;
         this.x = x;
         this.y = y;
+        this.edges = new Hashtable<>();
+        this.costSoFar = Double.POSITIVE_INFINITY;
+        this.AStarScore = Double.POSITIVE_INFINITY;
     }
 
     /**
      * Overloaded constructor that loads all of the info from the original constructor
      * as well as other extraneous info related to a node
-     * @param edges     Hashtable representing node and its associated cost
      * @param nodeID    nodeID for this node
      * @param fullName the full name of the node
      * @param shortName the short name of the node
@@ -105,13 +112,13 @@ public class Node {
      * @param x         x value of the node's location
      * @param y         y value of the node's location
      */
-    public Node(Hashtable<String, Integer> edges, String nodeID, String fullName, String shortName, String floor, String building, String nodeType, int x, int y) {
+    public Node(String nodeID, int x, int y, String floor, String building, String nodeType, String fullName, String shortName) {
         //coordinates
         this.x = x;
         this.y = y;
 
         //edges
-        this.edges = edges;
+        this.edges = new Hashtable<>();
 
         //nodeInfo
         this.nodeID = nodeID;
@@ -123,6 +130,37 @@ public class Node {
 
         this.heuristic = 0;
         this.visitedFlag = false;
+        this.costSoFar = Double.POSITIVE_INFINITY;
+        this.AStarScore = Double.POSITIVE_INFINITY;
+    }
+
+    /**
+     * @return the sum of the cost so far to this node and the heuristic
+     */
+    public double getAStarScore() {
+        return AStarScore;
+    }
+
+    /**
+     * Updates the AStarScore for this node by summing the heuristic and the costSoFar to this node.
+     */
+    public void updateAStarScore() {
+        this.AStarScore = this.heuristic + costSoFar;
+    }
+
+    /**
+     * @return the cost of the cheapest path to this node so far known
+     */
+    public double getCostSoFar() {
+        return costSoFar;
+    }
+
+    /**
+     * Changes the value of the cost of the cheapest path to this node
+     * @param costSoFar the cost of the cheapest path to this node fron the start
+     */
+    public void setCostSoFar(double costSoFar) {
+        this.costSoFar = costSoFar;
     }
 
     /**
@@ -152,31 +190,28 @@ public class Node {
         return nodeInfo;
     }
 
-    public void setNodeID(String nodeID){
-        this.nodeID = nodeID;
-    }
-
     /**
      * Retrieves the heuristic value
      *
      * @return Distance to node
      */
-    public int getHeuristic() {
+    public double getHeuristic() {
         return heuristic;
     }
 
     /**
      * Sets the heuristic value
+     * @param heuristic the heuristic value of this node
      */
-    public void setHeuristic(int heuristic) {
+    public void setHeuristic(double heuristic) {
         this.heuristic = heuristic;
     }
 
     /**
-     * Sets the visited flag
+     * Changes the visitedFlag to true when this node has been visited
      */
-    public void setVisitedFlag(boolean visitedFlag) {
-        this.visitedFlag = visitedFlag;
+    public void visited() {
+        this.visitedFlag = true;
     }
 
     /**
@@ -195,7 +230,6 @@ public class Node {
      */
     public void setParent(Node parent) {
         this.parent = parent;
-        this.hasParent = true;
     }
 
     /**
@@ -203,13 +237,9 @@ public class Node {
      * @param aNode Node used to add an edge from current Node
      * @param cost Integer representing the cost of the edge
      */
-    public Hashtable<String, Integer> addEdges(Node aNode, int cost) {
-        String aNodeID = aNode.nodeID;
-        String currentNodeID = this.nodeID;
-        this.edges.put(aNodeID, cost);
-        aNode.edges.put(currentNodeID, cost);
-
-        return this.edges;
+    public void addEdges(Node aNode, int cost) {
+        this.edges.put(aNode, cost);
+        aNode.edges.put(this, cost);
     }
 
     /**
@@ -217,7 +247,7 @@ public class Node {
      *
      * @return An ArrayList of nodes connected to this node
      */
-    public Hashtable<String, Integer> getEdges() {
+    public Hashtable<Node, Integer> getEdges() {
         return this.edges;
     }
 

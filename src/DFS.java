@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 /**
@@ -5,6 +6,8 @@ import java.util.ArrayList;
  * This program performs Depth-First Search
  * @author Conor McDonough
  */
+
+/*
 public class DFS {
     public static void main(String[] args) {
         ArrayList<Node> nodes= new ArrayList<>(); //ArrayList of Nodes
@@ -98,3 +101,5 @@ public class DFS {
     }
 
 }
+
+*/
