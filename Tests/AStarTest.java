@@ -9,7 +9,7 @@ public class AStarTest {
     Node g1 = nodes.get(Parser.indexOfNode(nodes, ""));
     Node s2 = nodes.get(Parser.indexOfNode(nodes, ""));
     Node g2 = nodes.get(Parser.indexOfNode(nodes, ""));
-    AStarOther a = new AStarOther(nodes, s1, g1);
+    AStar a = new AStar(nodes, s1, g1);
     ArrayList<Node> path = new ArrayList<>();
 
     public AStarTest() {

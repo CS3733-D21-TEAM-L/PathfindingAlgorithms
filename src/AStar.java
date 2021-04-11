@@ -1,65 +1,158 @@
-//pseudo code
-
-// basic understanding of A*: f(n) = g(n) + h(n)
-// f(n) is the estimated cost of the path passing through n
-// g(n) is the KNOWN distance
-// h(n) is estimated by the heuristic
-/*
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
+/**
+ * <h1>AStar Pathfinding</h1>
+ * AStar Pathfinding Algorithm that navigates a map of provided nodes
+ * @author Emmanuel Ola
+ */
 public class AStar {
+    /**
+     * ArrayList of provided nodes
+     */
+    private ArrayList nodes;
+    /**
+     * The starting node
+     */
+    private Node start;
+    /**
+     * The ending node
+     */
+    private Node goal;
+    /**
+     * Priority queue of open nodes. Instantiated with our NodeComparator class
+     */
+    private PriorityQueue<Node> openNodes;
 
-    public static void createPath(Node start, Node goal) { //(mapData, Node start, Node goal)
-        // Initialize variable to track cost
-        int cost = 0;
+    /** Loads the relevant information for the AStar algorithm and prints the result of the pathfinding operation
+     * @param nodes the list of nodes
+     * @param start the starting node
+     * @param goal the ending node
+     */
+    public AStar(ArrayList nodes, Node start, Node goal) {
+        this.nodes = nodes;
+        this.start = start;
+        start.setCostSoFar(0); //Initializes the cost so far of the starting node to 0
+        this.goal = goal;
+        openNodes = new PriorityQueue<>(new NodeComparator()); //Instantiates the priority queue with our overwrited comparator
+        this.process();
+        this.displayPath();
+    }
 
-        // Set up instance of the priority queue (maybe a class we have to make)
-        PriorityQueue<Node> frontier = new PriorityQueue<Node>();
+    /**
+     * Prints the path from the start node to the goal node
+     */
+    public void displayPath(){
+        Stack<Node> finalPath = this.getPath(); //
+        while (!finalPath.isEmpty())
+            System.out.println(finalPath.pop().getNodeInfo().get("fullName"));
+    }
 
-        // Adds the start location to the queue
-        frontier.add(start);
+    /**
+     * Helper method for displayPath() and returnPath() that provides a stack containing the solution path
+     * @return Stack containing the solution path for algorithm
+     */
+    private Stack<Node> getPath() {
+        Stack<Node> finalPath = new Stack<>(); //Stack containing the final path of our algorithm
 
-        // Initialize dictionaries to track past nodes and costs
-        Hashtable<Node, Integer> costSoFar = new Hashtable<Node, Integer>();
-        Hashtable<Node, Node> cameFrom = new Hashtable<Node, Node>();
-        // Iterate through the queue
-        while (!frontier.isEmpty()) //frontier is not empty
-        {
-            // Set up current location
-            Node current = frontier.poll(); //current item in queue;
 
-            // If we reach our goal location in the queue break out of the loop
-            if (current.getNodeID().equals(goal.getNodeID())) {
-                break; // Exit if goal is found
-            }
+        Node current = goal;
+        while (current.getParent() != null){
+            finalPath.push(current);
+            current = current.getParent();
+        }
+        finalPath.push(start); //Pushes the starting node on to the stack
 
-            // Iterate through all nodes connected to current node
-            for (Node next : current.getEdges()) {
-                // Calculates the cost of the next point (this represents g(n))
-                cost = costSoFar.get(current) + current.getHeuristic(); //costSoFar[current location in iteration] + current point distance;
+        return finalPath;
+    }
 
-                // Checks if the next location is not already in the cost_so_far dictionary
-                // Or if the new calculated cost is less than the locations previous cost
-                if (costSoFar.contains(next) || cost < costSoFar.get(next)) { //next+1??
+    /**
+     * <b>*For JUnit Testing*</b> This method returns a list of nodes from start to finish that represents
+     * the path of the AStar algorithm
+     * @return a List of nodes representing the path of the algorithm
+     */
+    public ArrayList<Node> returnPath(){
+        Stack<Node> finalPath = this.getPath();
+        ArrayList<Node> returnPath = new ArrayList<Node>();
+        while (!finalPath.isEmpty())
+            returnPath.add(finalPath.pop());
+        return returnPath;
+    }
 
-                    // Adds the next location and the new cost to the cost_so_far dictionary
-                    // cost_so_far[next location in iteration] = new_cost;
-                    costSoFar.put(next, cost);
+    /**
+     * Navigates the map by processing the priority queue
+     */
+    public void process(){
+        openNodes.add(start); //Adds our starting node to the priority queue
+        Node current = start; //Sets the current node to the starting node
+        double tentativeScore = 0;
 
-                    // Calculate the priority or f(n) based off the new calculated cost and the Euclidean distance
-                    // f(n) = g(n) + h(n)
-                    int priority = cost + current.getHeuristic(); //priority = new_cost + euclidean distance from current location to goal;
+        while (!openNodes.isEmpty()){
+            if (current.getNodeID().equals(goal.getNodeID()))
+                return; //Ends pathfinding when we reach our goal
+            current = openNodes.poll();
 
-                    // Adds the next location and its priority to the priority queue
-                    frontier.remove(next);
-                    frontier.add(next); //frontier.put(next location in iteration, priority);
-                    // Adds the next location to the came_from dictionary with the current location as its value
-                    cameFrom.put(next, current);//came_from[next] = current;
+            //Iterates through the neighbors of each node popped from the Priority Queue
+            for (Node neighbor : current.getEdges().keySet()) {
+                tentativeScore = (current.getCostSoFar() + distance(current, neighbor)); //Sets tentative score to the cost of taking this path to the neighbor
+                if (tentativeScore < neighbor.getCostSoFar()){ //Checks if the current path to neighbor is cheaper than any other we've encountered
+                    neighbor.setParent(current);
+                    neighbor.setCostSoFar(tentativeScore);
+                    neighbor.setHeuristic(calculateHeuristic(neighbor));
+                    neighbor.updateAStarScore();
+                    if (!openNodes.contains(neighbor))
+                        openNodes.add(neighbor); //Adds neighbor to the priority queue if it isn't already in there
                 }
             }
         }
     }
-}
 
- */
+    /**
+     * Calculates the heuristic for a provided node
+     * @param node the node to calculate a heuristic for
+     * @return the heuristic for the provide node
+     */
+    public double calculateHeuristic(Node node) {
+        return distance(node, goal);
+    }
+
+    /**
+     * Calculates the distance from one node to another
+     * @param a the starting node
+     * @param b the ending node
+     * @return the euclidean distance between two nodes
+     */
+    public double distance(Node a, Node b) {
+        //TODO MAKE THIS A SWITCH STATEMENT/MAKE DISTANCE FORMULA 3D
+        int x1 = a.getCoords().get("x");
+        int x2 = b.getCoords().get("x");
+        int y1 = a.getCoords().get("y");
+        int y2 = b.getCoords().get("y");
+        double flatDistance = Math.sqrt((Math.pow((x2-x1),2)) + (Math.pow((y2-y1),2)));
+        String afloor = a.getNodeInfo().get("floor");
+        String bfloor = b.getNodeInfo().get("floor");
+        if (afloor.equals("L1")||afloor.equals("L2"))
+            if (afloor.equals("L1"))
+                afloor = "0";
+            else
+                afloor = "-1";
+        if (bfloor.equals("L1")||bfloor.equals("L2"))
+            if (bfloor.equals("L1"))
+                bfloor = "0";
+            else
+                bfloor = "-1";
+        return flatDistance + (Math.abs(Integer.valueOf(afloor) - Integer.valueOf(bfloor)) * 50) ;
+        //return flatDistance;
+    }
+
+    public static void main(String[] args) {
+        //TODO make nodeID take click instance/drop-down  menu
+        Stopwatch timer = new Stopwatch();
+        ArrayList<Node> nodes = Parser.loadNodesandEdges();
+        Node start = nodes.get(Parser.indexOfNode(nodes, "EEXIT00201"));
+        Node goal = nodes.get(Parser.indexOfNode(nodes, "GDEPT00403"));
+        AStar example = new AStar(nodes, start, goal);
+        System.out.println(timer.elapsedTime());
+    }
+}
